@@ -1,0 +1,21 @@
+<div>
+  <svg version="1.1" baseProfile="full" viewBox="0 0 200 200" font-size="8px" xmlns="http://www.w3.org/2000/svg">
+    <text text-anchor="start" ng-attr-x="{{layout.yAxisLabelX}}" ng-attr-y="{{layout.yAxisLabelY}}">mg/l or mg/kg</text>
+    <text text-anchor="middle" ng-attr-x="{{layout.xAxisLabelX}}" ng-attr-y="{{layout.xAxisLabelY}}">Distance (m)</text>
+    <text text-anchor="end" fill="#f00" ng-attr-x="{{layout.soluteLabelX}}" ng-attr-y="{{layout.soluteLabelY}}">Solute (Red)</text>
+    <text text-anchor="end" fill="#00f" ng-attr-x="{{layout.sorbedLabelX}}" ng-attr-y="{{layout.sorbedLabelY}}">Sorbed (Blue)</text>
+    <text text-anchor="end" ng-repeat="item in layout.yLabels" ng-attr-x="{{item.x}}" ng-attr-y="{{item.y}}">{{item.text}}</text>
+    <text text-anchor="middle" ng-repeat="item in layout.xLabels" ng-attr-x="{{item.x}}" ng-attr-y="{{item.y}}">{{item.text}}</text>
+    <g stroke-width="1" stroke="#000" fill="none" stroke-linecap="square">
+      <path ng-attr-d="M {{layout.left}} {{layout.top}} L {{layout.left}} {{layout.bottom}} {{layout.right}} {{layout.bottom}}"/>
+      <line ng-repeat="item in layout.yTicks" ng-attr-x1="{{layout.yTickLeft}}" ng-attr-x2="{{layout.yTickRight}}" ng-attr-y1="{{item}}" ng-attr-y2="{{item}}"/>
+      <line ng-repeat="item in layout.xTicks" ng-attr-y1="{{layout.xTickTop}}" ng-attr-y2="{{layout.xTickBottom}}" ng-attr-x1="{{item}}" ng-attr-x2="{{item}}"/>
+      <path ng-attr-d="{{sorbed}}" stroke="#00f"/>
+      <path ng-attr-d="{{aqueous}}" stroke="#f00"/>
+    </g>
+  </svg>
+  <div class="time" ng-show="time.index&gt;-1">
+    <span>At time: {{time.value|number:2}} d</span>
+    <input type="range" ng-model="time.index" min="0" max="{{time.count-1}}" />
+  </div>
+<div>

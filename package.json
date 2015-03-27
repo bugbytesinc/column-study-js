@@ -1,0 +1,31 @@
+{
+  "name": "ColumnStudy",
+  "version": "2.0.0",
+  "description": "One dimensional finite difference saturated aquifer contaminant fate and trasnport model.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BugBytes, Inc.",
+  "license": "GPL",
+  "devDependencies": {
+    "angular": "^1.3.0",
+    "del": "^0.1.3",
+    "event-stream": "^3.1.7",
+    "gulp": "^3.8.8",
+    "gulp-angular-filesort": "^1.0.4",
+    "gulp-angular-templatecache": "^1.4.2",
+    "gulp-autoprefixer": "^1.0.1",
+    "gulp-concat": "^2.4.1",
+    "gulp-connect": "^2.0.6",
+    "gulp-csslint": "^0.1.5",
+    "gulp-ignore": "^1.2.1",
+    "gulp-inject": "^1.0.2",
+    "gulp-jshint": "^1.8.5",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-minify-html": "^0.1.6",
+    "gulp-ruby-sass": "^0.7.1",
+    "gulp-uglify": "^1.0.1",
+    "traceur": "0.0.72"
+  }
+}

@@ -1,0 +1,31 @@
+<form novalidate name="initialConditionsForm">
+  <div>
+    <h1 class="grouping">Site Properties</h1>
+    <div><label for="infiltrationRate">Infiltration Rate</label><input type="number" step="any" min="0.00001" required id="infiltrationRate" ng-model="config.Q"/> m/d</div>
+    <div><label for="soilDepth">Soil Depth</label><input type="number" step="any" min="0" required id="soilDepth" ng-model="config.lenSoil"/> m</div>
+    <div><label for="contaminatedDepth">Contaminated Depth</label><input type="number" step="any" min="0" required step="any" id="contaminatedDepth" ng-model="config.lenC"/> m</div>
+    <div><label for="contaminationMass">Contamination Mass</label><input type="number" step="any" min="0" required id="contaminationMass" ng-model="config.massC"/> kg/m<sup>2</sup></div>
+  </div>
+  <div>
+    <h1 class="grouping">Soil Properties</h1>
+    <div><label for="bulkDensity">Bulk Density, &rho;<sub>b</sub></label><input type="number" step="any" min="0" required id="bulkDensity" ng-model="config.rhoB"/> g/cm<sup>3</sup></div>
+    <div><label for="moistureContent">Moisture Content, &theta;</label><input type="number" step="any" min="0" max="1" required id="moistureContent" ng-model="config.n"/> </div>
+    <div><label for="dispersionCoefficient">Disp. Coeff. &alpha;</label><input type="number" step="any" min="0" required id="dispersionCoefficient" ng-model="config.alpha"/> cm<sup>3</sup>/g</div>
+  </div>
+  <div>
+    <h1 class="grouping">Contaminant Properties</h1>
+    <div><label for="partitioningCoefficient">Partitioning Coefficient, <i>K</i><sub>d</sub></label><input type="number" step="any" min="0" required id="partitioningCoefficient" ng-model="config.Kd"/> cm<sup>3</sup>/g</div>
+    <div><label for="sorptionRateType">Sorption/Desorption Rate</label></div>
+    <div><input type="radio" name="sorptionRateType" ng-model="config.kinSorp" ng-value="{{false}}" id="equilibriumSorption" /><label for="equilibriumSorption">Equilibrium</label></div>
+    <div><input type="radio" name="sorptionRateType" ng-model="config.kinSorp" ng-value="{{true}}"  id="kineticSorption" /><label for="kineticSorption">Kinetic, <i>k</i></label> <input type="number" step="any" min="0" required name="sorptionRate" ng-model="config.alphaS" ng-disabled="!config.kinSorp"/> d<sup>-1</sup></div>
+  </div>
+  <div>
+    <h1 class="grouping">Decay Rate</h1>
+    <div><label for="sorbedDecayRate">Sorbed Phase, &lambda;<sub>s</sub></label><input type="number" step="any" min="0" required id="sorbedDecayRate" ng-model="config.ks"/> d<sup>-1</sup></div>
+    <div><label for="aqueousDecayRate">Solute Phase, &lambda;<sub>aq</sub></label><input type="number" step="any" min="0" required id="aqueousDecayRate" ng-model="config.ka"/> d<sup>-1</sup></div>
+  </div>
+  <div class="error" ng-if="initialConditions.$error.required">Missing some initial conditions.</div>
+  <div class="error" ng-if="initialConditions.$error.number">Some values are not valid numbers.</div>
+  <div class="error" ng-if="initialConditions.$error.min">Some values are too small.</div>
+  <div class="error" ng-if="initialConditions.$error.max">Some values are too big.</div>
+</form>
