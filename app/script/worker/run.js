@@ -1,6 +1,6 @@
 /* jshint esnext: true */
 /* jshint worker: true */
-import {solve} from 'solve';
+import {solve} from 'solve.js';
 
 activate();
 
@@ -9,7 +9,7 @@ function activate(){
   postMessage({});
 }
 
-function runSimulation(event){  
+function runSimulation(event){
   removeEventListener('message',runSimulation);
   for(var timestep of solve(event.data)) {
     postMessage(timestep);

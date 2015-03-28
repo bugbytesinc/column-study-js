@@ -31,8 +31,8 @@ gulp.task('js', function() {
 gulp.task('sass', function() {
   return gulp.src('app/scss/*.scss')
     .pipe(sass({ style: 'expanded' }))
-    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
     .pipe(ignore.exclude('*.map'))
+    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
     .pipe(csslint({
       'compatible-vendor-prefixes':false,
       'overqualified-elements':false,
@@ -51,7 +51,7 @@ gulp.task('html', function(){
 gulp.task('lib', function(){
       return gulp.src([
           'node_modules/angular/angular.js',
-          'node_modules/traceur/bin/traceur.js'])
+          'node_modules/gulp-traceur/node_modules/traceur/bin/traceur.js'])
         .pipe(gulp.dest('build/dev/script'));
 });
 
@@ -73,7 +73,7 @@ gulp.task('watch', function() {
 gulp.task('dist',function(){
   var jsFiles = eventStream.merge(
       gulp.src(['node_modules/angular/angular.min.js']),
-      gulp.src(['node_modules/traceur/bin/traceur.js']),
+      gulp.src(['node_modules/gulp-traceur/node_modules/traceur/bin/traceur.js']),
       eventStream.merge(
         gulp.src(['app/script/directives/*.html'])
           .pipe(minifyhtml({empty:true}))
