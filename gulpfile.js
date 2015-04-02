@@ -7,6 +7,8 @@ var autoprefixer = require('gulp-autoprefixer');
 var minifycss = require('gulp-minify-css');
 var minifyhtml = require('gulp-minify-html');
 var plumber = require('gulp-plumber');
+var order = require('gulp-order');
+var traceur = require('gulp-traceur');
 var connect = require('gulp-connect');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
@@ -84,7 +86,6 @@ gulp.task('watch', function() {
 gulp.task('dist',function(){
   var jsFiles = eventStream.merge(
       gulp.src(['node_modules/angular/angular.min.js']),
-      gulp.src(['node_modules/gulp-traceur/node_modules/traceur/bin/traceur.js']),
       eventStream.merge(
         gulp.src(['app/script/directives/*.html'])
           .pipe(minifyhtml({empty:true}))
@@ -99,10 +100,19 @@ gulp.task('dist',function(){
         .pipe(concat('main.min.js'))
         .pipe(uglify())
     ).pipe(gulp.dest('build/dist/script'));
-  var workerFiles = gulp.src('app/script/worker/*.js')
-      .pipe(jshint())
+  var workerFiles = eventStream.merge(
+      gulp.src(traceur.RUNTIME_PATH),
+      gulp.src(['app/script/worker/solve.js','app/script/worker/run.js'])
+        .pipe(jshint())
+        .pipe(traceur({modules:'inline'})))
+      .pipe(order([
+        'traceur-runtime.js',
+        'solve.js',
+        'run.js']))
+      .pipe(concat('worker.js'))
+      .pipe(uglify())
       .pipe(jshint.reporter('default'))
-      .pipe(gulp.dest('build/dist/script/worker'));
+      .pipe(gulp.dest('build/dist/script/worker/'));
   var cssFiles = eventStream.merge(
       gulp.src('app/scss/*.scss')
         .pipe(sass({ style: 'expanded' }))
