@@ -6,6 +6,7 @@ var sass = require('gulp-ruby-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var minifycss = require('gulp-minify-css');
 var minifyhtml = require('gulp-minify-html');
+var plumber = require('gulp-plumber');
 var connect = require('gulp-connect');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
@@ -17,12 +18,20 @@ var templateCache = require('gulp-angular-templatecache');
 var del = require('del');
 var eventStream = require('event-stream');
 
+var plumberOptions = {
+  handleError: function(err) {
+    console.error(err);
+    this.emit('end');
+  }
+}
+
 gulp.task('clean',function(cb){
   del(['build','.sass-cache'],cb);
 });
 
 gulp.task('js', function() {
   return gulp.src('app/script/**/*.js')
+    .pipe(plumber(plumberOptions))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(connect.reload());
@@ -30,6 +39,7 @@ gulp.task('js', function() {
 
 gulp.task('sass', function() {
   return gulp.src('app/scss/*.scss')
+    .pipe(plumber(plumberOptions))
     .pipe(sass({ style: 'expanded' }))
     .pipe(ignore.exclude('*.map'))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
@@ -45,6 +55,7 @@ gulp.task('sass', function() {
 
 gulp.task('html', function(){
   return gulp.src('app/**/*.html')
+    .pipe(plumber(plumberOptions))
     .pipe(connect.reload());
 });
 
