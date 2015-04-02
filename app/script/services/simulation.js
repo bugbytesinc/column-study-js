@@ -26,7 +26,7 @@
           simulation.error = null;
           simulation.data = [];
         }
-        worker = new Worker('script/worker/worker.js');
+        worker = new Worker('script/worker.js');
         worker.addEventListener('message',onReady);
         worker.addEventListener('error',onError);
       }

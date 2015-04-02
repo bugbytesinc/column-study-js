@@ -32,10 +32,24 @@ gulp.task('clean',function(cb){
 });
 
 gulp.task('js', function() {
-  return gulp.src('app/script/**/*.js')
+  var workerFiles = eventStream.merge(
+      gulp.src(traceur.RUNTIME_PATH),
+      gulp.src(['app/script/worker/solve.js','app/script/worker/run.js'])
+        .pipe(plumber(plumberOptions))
+        .pipe(jshint())
+        .pipe(traceur({modules:'inline'})))
+    .pipe(order([
+      'traceur-runtime.js',
+      'solve.js',
+      'run.js']))
+    .pipe(concat('worker.js'))
+    .pipe(jshint.reporter('default'))
+  var jsFiles = gulp.src(['app/script/**/*.js','!app/script/worker/*.js'])
     .pipe(plumber(plumberOptions))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
+  return eventStream.merge(jsFiles,workerFiles)
+    .pipe(gulp.dest('build/dev/script'))
     .pipe(connect.reload());
 });
 
@@ -58,19 +72,20 @@ gulp.task('sass', function() {
 gulp.task('html', function(){
   return gulp.src('app/**/*.html')
     .pipe(plumber(plumberOptions))
+    .pipe(gulp.dest('build/dev/'))
     .pipe(connect.reload());
 });
 
 gulp.task('lib', function(){
       return gulp.src([
           'node_modules/angular/angular.js',
-          'node_modules/gulp-traceur/node_modules/traceur/bin/traceur.js'])
+          traceur.RUNTIME_PATH])
         .pipe(gulp.dest('build/dev/script'));
 });
 
 gulp.task('connect', ['lib'], function(){
   return connect.server({
-    root: [ 'app', 'build/dev' ],
+    root: [ 'build/dev' ],
     port: 8000,
     livereload: true
   });
@@ -112,7 +127,7 @@ gulp.task('dist',function(){
       .pipe(concat('worker.js'))
       .pipe(uglify())
       .pipe(jshint.reporter('default'))
-      .pipe(gulp.dest('build/dist/script/worker/'));
+      .pipe(gulp.dest('build/dist/script/'));
   var cssFiles = eventStream.merge(
       gulp.src('app/scss/*.scss')
         .pipe(sass({ style: 'expanded' }))
@@ -143,4 +158,4 @@ gulp.task('connect-dist',['dist'],function(){
   });
 });
 
-gulp.task('default', ['js', 'sass', 'connect', 'watch']);
+gulp.task('default', ['html', 'js', 'sass', 'connect', 'watch']);
