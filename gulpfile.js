@@ -106,8 +106,8 @@ gulp.task('dist',function(){
   var cssFiles = eventStream.merge(
       gulp.src('app/scss/*.scss')
         .pipe(sass({ style: 'expanded' }))
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
         .pipe(ignore.exclude('*.map'))
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
         .pipe(csslint({
           'compatible-vendor-prefixes':false,
           'overqualified-elements':false,
