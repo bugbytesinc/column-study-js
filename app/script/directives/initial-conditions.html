@@ -24,8 +24,8 @@
     <div><label for="sorbedDecayRate">Sorbed Phase, &lambda;<sub>s</sub></label><input type="number" step="any" min="0" required id="sorbedDecayRate" ng-model="config.ks"/> d<sup>-1</sup></div>
     <div><label for="aqueousDecayRate">Solute Phase, &lambda;<sub>aq</sub></label><input type="number" step="any" min="0" required id="aqueousDecayRate" ng-model="config.ka"/> d<sup>-1</sup></div>
   </div>
-  <div class="error" ng-if="initialConditions.$error.required">Missing some initial conditions.</div>
-  <div class="error" ng-if="initialConditions.$error.number">Some values are not valid numbers.</div>
-  <div class="error" ng-if="initialConditions.$error.min">Some values are too small.</div>
-  <div class="error" ng-if="initialConditions.$error.max">Some values are too big.</div>
+  <div class="error" ng-if="initialConditionsForm.$error.required">Missing some initial conditions.</div>
+  <div class="error" ng-if="initialConditionsForm.$error.number">Some values are not valid numbers.</div>
+  <div class="error" ng-if="initialConditionsForm.$error.min">Some values are too small.</div>
+  <div class="error" ng-if="initialConditionsForm.$error.max">Some values are too big.</div>
 </form>
