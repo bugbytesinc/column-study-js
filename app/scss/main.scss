@@ -140,6 +140,16 @@ body
   color: #aaa;
   text-align: right;
 }
+@media screen and ( max-height: 34rem ){
+  .graph
+  {
+    width: 24rem;
+    svg {
+      width: 24rem;
+      height: 24rem;
+    }
+  }
+}
 @media screen and ( max-height: 32rem ){
   .header
   {
@@ -159,6 +169,14 @@ body
       height: 20rem;
     }
   }
+  .graph
+  {
+    width: 18rem;
+    svg {
+      width: 18rem;
+      height: 18rem;
+    }
+  }
 }
 
 @media screen and ( max-height: 22rem ){
@@ -168,6 +186,16 @@ body
     svg {
       width: 7rem;
       height: 14rem;
+    }
+  }
+  .graph
+  {
+    width: 14rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    svg {
+      width: 12rem;
+      height: 12rem;
     }
   }
 }
