@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2015 BugBytes, Inc. http://www.bugbytes.com
+Distributed under the MIT License.
+
+A One dimensional finite difference saturated aquifer contaminant
+fate and trasnport numerical model. Based on a master's thesis by Jason Fabritz.
+http://www.bugbytes.com/jasonf/msthesis/index.html
+*/
 /* jshint esnext: true */
 /* exported solve */
 export function* solve(options) {
